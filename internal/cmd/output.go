@@ -31,7 +31,7 @@ func printError(msg string) {
 		out, _ := json.MarshalIndent(JSONResponse{Success: false, Error: msg}, "", "  ")
 		fmt.Println(string(out))
 	} else {
-		color.Red("エラー: %s", msg)
+		color.Red("Error: %s", msg)
 	}
 	exitFunc(1)
 }
