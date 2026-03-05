@@ -76,23 +76,31 @@ var postCmd = &cobra.Command{
 func createPost(ctx context.Context, channelID, text string) (string, error) {
 	c := client.NewWithEndpoint(apiToken, bufferEndpoint)
 
+	// schedulingType: automatic, mode: now で即時投稿
+	// レスポンスは PostActionSuccess | MutationError のunion型
 	mutation := `
 	mutation CreatePost($channelId: String!, $text: String!) {
 		createPost(input: {
 			channelId: $channelId
 			text: $text
+			schedulingType: automatic
+			mode: now
 		}) {
-			post {
-				id
+			... on PostActionSuccess {
+				post {
+					id
+				}
+			}
+			... on MutationError {
+				message
 			}
 		}
 	}`
 
 	var resp struct {
 		CreatePost struct {
-			Post struct {
-				ID string `json:"id"`
-			} `json:"post"`
+			Post    struct{ ID string `json:"id"` } `json:"post"`
+			Message string                          `json:"message"`
 		} `json:"createPost"`
 	}
 
@@ -103,6 +111,9 @@ func createPost(ctx context.Context, channelID, text string) (string, error) {
 
 	if err := c.Run(ctx, mutation, vars, &resp); err != nil {
 		return "", err
+	}
+	if resp.CreatePost.Message != "" {
+		return "", fmt.Errorf("%s", resp.CreatePost.Message)
 	}
 
 	return resp.CreatePost.Post.ID, nil

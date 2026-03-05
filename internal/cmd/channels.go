@@ -48,7 +48,9 @@ func fetchChannels(ctx context.Context, organizationID string) ([]Channel, error
 
 	query := `
 	query GetChannels($organizationId: String!) {
-		channels(organizationId: $organizationId) {
+		channels(input: {
+			organizationId: $organizationId
+		}) {
 			id
 			name
 			service
