@@ -79,7 +79,7 @@ func createPost(ctx context.Context, channelID, text string) (string, error) {
 	// schedulingType: automatic, mode: now で即時投稿
 	// レスポンスは PostActionSuccess | MutationError のunion型
 	mutation := `
-	mutation CreatePost($channelId: String!, $text: String!) {
+	mutation CreatePost($channelId: ChannelId!, $text: String!) {
 		createPost(input: {
 			channelId: $channelId
 			text: $text

@@ -47,7 +47,7 @@ func fetchChannels(ctx context.Context, organizationID string) ([]Channel, error
 	c := client.NewWithEndpoint(apiToken, bufferEndpoint)
 
 	query := `
-	query GetChannels($organizationId: String!) {
+	query GetChannels($organizationId: OrganizationId!) {
 		channels(input: {
 			organizationId: $organizationId
 		}) {
