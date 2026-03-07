@@ -1,0 +1,65 @@
+[Request interrupted by user for tool use]
+
+---
+
+Implement the following plan:
+
+# `buffer post` の --text フラグを位置引数に変更
+
+## Context
+
+現在 `buffer post --text "..."` と書く必要があるが、`--text` ラベルは冗長。
+`buffer post "..."` と書けるよう、位置引数（cobra の `args`）に変更する。
+
+## 変更ファイル
+
+`internal/cmd/post.go` のみ。
+
+## 変更内容
+
+### 1. `postText` パッケージ変数と `--text` フラグ定義を削除
+
+```go
+// 削除
+var postText string
+
+// init() 内も削除
+postCmd.Flags().StringVar(&postText, "text", "", "...")
+```
+
+### 2. `Run` を `Args` バリデーション付きに変更
+
+cobra の `ExactArgs(1)` で引数が1つ必須であることを強制する。
+
+```go
+var postCmd = &cobra.Command{
+    Use:   "post <text>",
+    Short: "全チャンネルにテキストを投稿する",
+    Args:  cobra.ExactArgs(1),
+    Run: func(cmd *cobra.Command, args []string) {
+        text := args[0]
+        // postText の代わりに text を使う
+        ...
+    },
+}
+```
+
+### 3. `Run` 内の `postText` 参照をすべて `text` に置き換え
+
+## 検証
+
+```bash
+go run ./cmd/buffer post "Hello world!"
+
+# 引数なしはエラーになること
+go run ./cmd/buffer post
+```
+
+
+If you need specific details from before exiting plan mode (like exact code snippets, error messages, or content you generated), read the full transcript at: /Users/zeero/.claude/projects/-Users-zeero-dev-github-com-zeero-buffer-v2-cli/8a456968-d109-40fd-b628-636cdf56f743.jsonl
+
+If this plan can be broken down into multiple independent tasks, consider using the TeamCreate tool to create a team and parallelize the work.
+
+---
+
+a
