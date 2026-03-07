@@ -1,0 +1,8 @@
+postでエラー
+```
+failed: graphql: Value "now" does not exist in "ShareMode" enum.
+```
+
+---
+
+c
