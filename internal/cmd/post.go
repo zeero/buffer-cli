@@ -17,17 +17,15 @@ type PostResult struct {
 	Error       string `json:"error,omitempty"`
 }
 
-var postText string
-
 var postCmd = &cobra.Command{
-	Use:   "post",
+	Use:   "post <text>",
 	Short: "全チャンネルにテキストを投稿する",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
+		text := args[0]
+
 		if apiToken == "" {
 			printError("APIトークンが設定されていません。--token または BUFFER_TOKEN 環境変数を設定してください")
-		}
-		if postText == "" {
-			printError("--text は必須です")
 		}
 
 		ctx := context.Background()
@@ -46,7 +44,7 @@ var postCmd = &cobra.Command{
 
 		results := make([]PostResult, 0, len(channels))
 		for _, ch := range channels {
-			postID, postErr := createPost(ctx, ch.ID, postText)
+			postID, postErr := createPost(ctx, ch.ID, text)
 			r := PostResult{
 				ChannelID:   ch.ID,
 				ChannelName: ch.Name,
@@ -120,6 +118,5 @@ func createPost(ctx context.Context, channelID, text string) (string, error) {
 }
 
 func init() {
-	postCmd.Flags().StringVar(&postText, "text", "", "投稿するテキスト（必須）")
 	rootCmd.AddCommand(postCmd)
 }
