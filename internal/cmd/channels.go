@@ -6,7 +6,7 @@ import (
 
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
-	"github.com/zeero/buffer-v2-cli/client"
+	"github.com/zeero/buffer-cli/client"
 )
 
 type Channel struct {
