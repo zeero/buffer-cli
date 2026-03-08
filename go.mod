@@ -1,4 +1,4 @@
-module github.com/zeero/buffer-v2-cli
+module github.com/zeero/buffer-cli
 
 go 1.21
 
