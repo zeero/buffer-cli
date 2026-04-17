@@ -22,7 +22,7 @@ Buffer の API をターミナルから手軽に操作できる CLI ツールで
 ### go install（推奨）
 
 ```bash
-go install github.com/zeero/buffer-v2-cli/cmd/buffer@latest
+go install github.com/zeero/buffer-cli/cmd/buffer@latest
 ```
 
 インストール後、`buffer` コマンドが使えるようになります。
@@ -31,8 +31,8 @@ go install github.com/zeero/buffer-v2-cli/cmd/buffer@latest
 ### ソースからビルド
 
 ```bash
-git clone https://github.com/zeero/buffer-v2-cli.git
-cd buffer-v2-cli
+git clone https://github.com/zeero/buffer-cli.git
+cd buffer-cli
 go build -o buffer .
 ```
 

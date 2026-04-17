@@ -1,6 +1,6 @@
 package main
 
-import "github.com/zeero/buffer-v2-cli/internal/cmd"
+import "github.com/zeero/buffer-cli/internal/cmd"
 
 func main() {
 	cmd.Execute()
