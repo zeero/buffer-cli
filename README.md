@@ -63,10 +63,10 @@ buffer organizations
 buffer channels
 
 # 全チャンネルにテキストを投稿
-buffer post --text "Hello from CLI!"
+buffer post "Hello from CLI!"
 
 # 特定のオーガニゼーションを指定して投稿
-buffer post --org "My Org" --text "Hello!"
+buffer post --org "My Org" "Hello!"
 
 # JSON 形式で出力（スクリプト・AI エージェント連携向け）
 buffer channels --json | jq '.data[].name'
@@ -117,12 +117,8 @@ buffer channels [--org <id|name>] [--json]
 オーガニゼーションの**全チャンネル**に対してテキストを即時投稿します。
 
 ```bash
-buffer post --text <text> [--org <id|name>] [--json]
+buffer post <text> [--org <id|name>] [--json]
 ```
-
-| フラグ | 必須 | 説明 |
-|---|---|---|
-| `--text` | ✅ | 投稿するテキスト |
 
 ```
 === Posting to 2 channels ===
